@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Changed Player
-    // Save
+    // Input system
 }
