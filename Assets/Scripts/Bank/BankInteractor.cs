@@ -16,7 +16,14 @@ public class BankInteractor : Interactor
 
     public void AddCoins(object sender, int value)
     {
+        _repository.Coints += value;
+        _repository.Save();
+    }
 
+    public void Spend(object sender, int value)
+    {
+        _repository.Coints -= value;
+        _repository.Save();
     }
 
 }

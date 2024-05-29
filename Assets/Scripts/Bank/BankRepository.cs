@@ -10,8 +10,8 @@ public class BankRepository : Repository
     }
     public int Coints
     {
-        get => _coins.coint;
-        set => _coins.coint = value;
+        get => _coins.coints;
+        set => _coins.coints = value;
     }
     public override void Initialize()
     {

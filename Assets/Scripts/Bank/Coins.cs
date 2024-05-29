@@ -1,6 +1,6 @@
 
 public class Coins
 {
-    public int coint;
+    public int coints;
     public const string KEY = "BANK_KEY";
 }
