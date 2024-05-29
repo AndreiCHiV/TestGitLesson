@@ -13,7 +13,7 @@ public class ArcTester : MonoBehaviour
         _bankRepository = new BankRepository(_coins);
         _bankRepository.Initialize();
 
-        _bankInteractor = new BankInteractor(_bankRepository);
+        _bankInteractor = new BankInteractor();
         _bankInteractor.Initialze();
 
         Debug.Log($"Coins in bank = {_bankInteractor.Coins}");

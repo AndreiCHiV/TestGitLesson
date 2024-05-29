@@ -2,9 +2,9 @@ public class BankInteractor : Interactor
 {
     private BankRepository _repository;
 
-    public BankInteractor(BankRepository repository)
+    public BankInteractor()
     {
-        _repository = repository;
+        //_repository = repository;
     }
 
     public int Coins => _repository.Coints;
