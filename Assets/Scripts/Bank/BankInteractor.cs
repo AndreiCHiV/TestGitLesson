@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BankInteractor : MonoBehaviour
+public class BankInteractor : Interactor
 {
-    // Start is called before the first frame update
-    void Start()
+    private BankRepository _repository;
+
+    public BankInteractor(BankRepository repository)
     {
-        
+        _repository = repository;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int Coins => _repository.Coints;
+
+    public bool IsEnougthCoins(int value)
     {
-        
+        return Coins >= value;
     }
+
+    public void AddCoins(object sender, int value)
+    {
+
+    }
+
 }
