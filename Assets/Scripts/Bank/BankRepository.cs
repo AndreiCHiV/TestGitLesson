@@ -2,24 +2,21 @@ using UnityEngine;
 
 public class BankRepository : Repository
 {
-    private readonly Coins _coins;
+    private int _coins;
+    public const string KEY = "BANK_KEY";
 
-    public BankRepository(Coins coins)
+    public int Coins
     {
-        _coins = coins;
-    }
-    public int Coints
-    {
-        get => _coins.coints;
-        set => _coins.coints = value;
+        get => _coins;
+        set => _coins = value;
     }
     public override void Initialize()
     {
-        Coints = PlayerPrefs.GetInt(Coins.KEY, 0);
+        Coins = PlayerPrefs.GetInt(KEY, 0);
     }
 
     public override void Save()
     {
-        PlayerPrefs.SetInt(Coins.KEY, Coints);
+        PlayerPrefs.SetInt(KEY, Coins);
     }
 }

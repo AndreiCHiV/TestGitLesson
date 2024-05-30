@@ -2,12 +2,17 @@ public class BankInteractor : Interactor
 {
     private BankRepository _repository;
 
-    public BankInteractor()
+    public int Coins => _repository.Coins;
+    public override void OnCreate()
     {
-        //_repository = repository;
+        base.OnCreate();
+        _repository = ArcTester.repositoriesBase.GetRepository<BankRepository>();
     }
 
-    public int Coins => _repository.Coints;
+    public override void Initialze()
+    {
+        Bank.Initialize(this);
+    }
 
     public bool IsEnougthCoins(int value)
     {
@@ -16,13 +21,13 @@ public class BankInteractor : Interactor
 
     public void AddCoins(object sender, int value)
     {
-        _repository.Coints += value;
+        _repository.Coins += value;
         _repository.Save();
     }
 
     public void Spend(object sender, int value)
     {
-        _repository.Coints -= value;
+        _repository.Coins -= value;
         _repository.Save();
     }
 

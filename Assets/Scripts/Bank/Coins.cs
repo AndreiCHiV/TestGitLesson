@@ -1,4 +1,3 @@
-
 public class Coins
 {
     public int coints;

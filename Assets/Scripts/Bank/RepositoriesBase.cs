@@ -12,7 +12,7 @@ public class RepositoriesBase
 
     public void CreateAllRepository()
     {
-        //CreateRepository<BankRepository>();
+        CreateRepository<BankRepository>();
     }
 
     private void CreateRepository<T>() where T : Repository, new()
@@ -39,7 +39,7 @@ public class RepositoriesBase
 
         foreach (var interactor in allInteractors)
         {
-            interactor.Initialze();
+            interactor.Initialize();
         }
     }
 
@@ -53,7 +53,7 @@ public class RepositoriesBase
         }
     }
 
-    public T GetInteractor<T>() where T : Interactor
+    public T GetRepository<T>() where T : Repository
     {
         var type = typeof(T);
         return (T)_repositoriesMap[type];

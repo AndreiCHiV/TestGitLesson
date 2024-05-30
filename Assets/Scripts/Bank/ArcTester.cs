@@ -1,37 +1,72 @@
+using System.Collections;
 using UnityEngine;
 
 public class ArcTester : MonoBehaviour
 {
     private BankRepository _bankRepository;
     private BankInteractor _bankInteractor;
-    private Coins _coins;
+
+    public static InteractorsBase interactorsBase;
+    public static RepositoriesBase repositoriesBase;
 
     private void Start()
     {
-        _coins = new Coins();
-
-        _bankRepository = new BankRepository(_coins);
+        _bankRepository = new BankRepository();
         _bankRepository.Initialize();
 
         _bankInteractor = new BankInteractor();
         _bankInteractor.Initialze();
 
         Debug.Log($"Coins in bank = {_bankInteractor.Coins}");
+
+        StartCoroutine(StartGameRotine());
     }
 
 
     private void Update()
     {
+        if ()
+        {
+
+        }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
-            _bankInteractor.AddCoins(this, 5);
-            Debug.Log($"Coins added (5), {_bankInteractor.Coins}");
+            Bank.AddCoins(this, 5);
+            Debug.Log($"Coins added (5), {Bank.Coins}");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _bankInteractor.Spend(this, 10);
-            Debug.Log($"Coins spend (10), {_bankInteractor.Coins}");
+            Bank.Spend(this, 10);
+            Debug.Log($"Coins spend (10), {Bank.Coins}");
         }
+    }
+
+    private IEnumerator StartGameRotine()
+    {
+        interactorsBase = new InteractorsBase();
+        repositoriesBase = new RepositoriesBase();
+
+        interactorsBase.CreateAllInteractor();
+        repositoriesBase.CreateAllRepository();
+
+        yield return null;
+
+        interactorsBase.SendOnCreateToAllInteractors();
+        repositoriesBase.SendOnCreateToAllRepository();
+
+        yield return null;
+
+        interactorsBase.InitializeAllInteractors();
+        repositoriesBase.InitializeAllRepository();
+
+        yield return null;
+
+        interactorsBase.SendOnStartToAllInteractors();
+        repositoriesBase.SendOnStartToAllRepository();
+
+        yield return null;
+
     }
 
 }
