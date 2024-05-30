@@ -3,31 +3,20 @@ using UnityEngine;
 
 public class ArcTester : MonoBehaviour
 {
-    private BankRepository _bankRepository;
-    private BankInteractor _bankInteractor;
-
     public static InteractorsBase interactorsBase;
     public static RepositoriesBase repositoriesBase;
 
     private void Start()
     {
-        _bankRepository = new BankRepository();
-        _bankRepository.Initialize();
-
-        _bankInteractor = new BankInteractor();
-        _bankInteractor.Initialze();
-
-        Debug.Log($"Coins in bank = {_bankInteractor.Coins}");
-
         StartCoroutine(StartGameRotine());
     }
 
 
     private void Update()
     {
-        if ()
+        if (!Bank.IsInitialized)
         {
-
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
