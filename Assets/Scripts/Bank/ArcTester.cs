@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class ArcTester : MonoBehaviour
 {
-    public static InteractorsBase interactorsBase;
-    public static RepositoriesBase repositoriesBase;
+    public static Scene scene;
 
     private void Start()
     {
-        StartCoroutine(StartGameRotine());
+        SceneConfigExample sceneConfig = new SceneConfigExample();
+        scene = new Scene(sceneConfig);
+
+        StartCoroutine(scene.InitializeRoutine());
     }
 
 
@@ -30,32 +32,4 @@ public class ArcTester : MonoBehaviour
             Debug.Log($"Coins spend (10), {Bank.Coins}");
         }
     }
-
-    private IEnumerator StartGameRotine()
-    {
-        interactorsBase = new InteractorsBase();
-        repositoriesBase = new RepositoriesBase();
-
-        interactorsBase.CreateAllInteractor();
-        repositoriesBase.CreateAllRepository();
-
-        yield return null;
-
-        interactorsBase.SendOnCreateToAllInteractors();
-        repositoriesBase.SendOnCreateToAllRepository();
-
-        yield return null;
-
-        interactorsBase.InitializeAllInteractors();
-        repositoriesBase.InitializeAllRepository();
-
-        yield return null;
-
-        interactorsBase.SendOnStartToAllInteractors();
-        repositoriesBase.SendOnStartToAllRepository();
-
-        yield return null;
-
-    }
-
 }

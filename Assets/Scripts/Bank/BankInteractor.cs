@@ -6,7 +6,7 @@ public class BankInteractor : Interactor
     public override void OnCreate()
     {
         base.OnCreate();
-        _repository = ArcTester.repositoriesBase.GetRepository<BankRepository>();
+        _repository = ArcTester.scene.GetRepository<BankRepository>();
     }
 
     public override void Initialze()

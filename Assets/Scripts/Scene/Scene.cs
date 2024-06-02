@@ -1,18 +1,50 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Scene : MonoBehaviour
+public class Scene
 {
-    // Start is called before the first frame update
-    void Start()
+    private InteractorsBase _interactorsBase;
+    private RepositoriesBase _repositoriesBase;
+
+    private SceneConfig _sceneConfig;
+
+    public Scene(SceneConfig config)
     {
-        
+        _sceneConfig = config;
+        _interactorsBase = new InteractorsBase(config);
+        _repositoriesBase = new RepositoriesBase(config);
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public T GetRepository<T>() where T : Repository
     {
-        
+        return _repositoriesBase.GetRepository<T>();
     }
+
+    public T GetIteractor<T>() where T : Interactor
+    {
+        return _interactorsBase.GetInteractor<T>();
+    }
+
+    public IEnumerator InitializeRoutine()
+    {
+        _interactorsBase.CreateAllInteractor();
+        _repositoriesBase.CreateAllRepository();
+
+        yield return null;
+
+        _interactorsBase.SendOnCreateToAllInteractors();
+        _repositoriesBase.SendOnCreateToAllRepository();
+
+        yield return null;
+
+        _interactorsBase.InitializeAllInteractors();
+        _repositoriesBase.InitializeAllRepository();
+
+        yield return null;
+
+        _interactorsBase.SendOnStartToAllInteractors();
+        _repositoriesBase.SendOnStartToAllRepository();
+    }
+
 }

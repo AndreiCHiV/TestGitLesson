@@ -4,24 +4,25 @@ using System.Collections.Generic;
 public class RepositoriesBase
 {
     private Dictionary<Type, Repository> _repositoriesMap;
+    private SceneConfig _sceneConfig;
 
-    public RepositoriesBase()
+    public RepositoriesBase(SceneConfig config)
     {
-        _repositoriesMap = new Dictionary<Type, Repository>();
+        _sceneConfig = config;
     }
 
     public void CreateAllRepository()
     {
-        CreateRepository<BankRepository>();
+        _repositoriesMap = _sceneConfig.CreateAllRepositories();
     }
 
-    private void CreateRepository<T>() where T : Repository, new()
-    {
-        var repository = new T();
-        var type = typeof(T);
+    //private void CreateRepository<T>() where T : Repository, new()
+    //{
+    //    var repository = new T();
+    //    var type = typeof(T);
 
-        _repositoriesMap[type] = repository;
-    }
+    //    _repositoriesMap[type] = repository;
+    //}
 
     public void SendOnCreateToAllRepository()
     {

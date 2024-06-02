@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public abstract class SceneConfig
 {
-    public abstract Repository[] CreateAllRepositories();
-    public abstract Interactor[] CreateAllIteractors();
+    public abstract Dictionary<Type, Repository> CreateAllRepositories();
+    public abstract Dictionary<Type, Interactor> CreateAllIteractors();
 
     public void CreateInteractor<T>(Dictionary<Type, Interactor> interactorMap) where T : Interactor, new()
     {
