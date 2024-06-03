@@ -1,4 +1,4 @@
-﻿public sealed class SceneManagerExample : SceneMangerBase
+﻿public sealed class SceneManagerExample : SceneManagerBase
 {
     public override void InitScenesMap()
     {

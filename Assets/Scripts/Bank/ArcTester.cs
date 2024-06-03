@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class ArcTester : MonoBehaviour
 {
-    public static SceneMangerBase sceneManager;
+    private PlayerGame _player;
 
     private void Start()
     {
-        sceneManager = new SceneManagerExample();
-        sceneManager.InitScenesMap();
-        sceneManager.LoadCurrentSceneAsync();
-
+        Game.Run();
+        Game.OnGameInitializedEvent += OnGameInitialized;
     }
 
+    private void OnGameInitialized()
+    {
+        Game.OnGameInitializedEvent -= OnGameInitialized;
+        var playerInteractor = Game.GetInteractor<PlayerInteractor>();
+        _player = playerInteractor.player;
+    }
 
     private void Update()
     {
@@ -20,6 +25,12 @@ public class ArcTester : MonoBehaviour
         {
             return;
         }
+        if (_player == null)
+        {
+            return;
+        }
+
+        Debug.Log($"Player position: {_player.transform.position}");
 
         if (Input.GetKeyDown(KeyCode.A))
         {

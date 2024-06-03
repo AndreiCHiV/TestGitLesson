@@ -9,10 +9,11 @@ public class SceneConfigExample : SceneConfig
 
     public override Dictionary<Type, Interactor> CreateAllIteractors()
     {
-        Dictionary<Type, Interactor> iteractorsMap = new Dictionary<Type, Interactor>();
-        CreateInteractor<BankInteractor>(iteractorsMap);
+        Dictionary<Type, Interactor> interactorsMap = new Dictionary<Type, Interactor>();
+        CreateInteractor<BankInteractor>(interactorsMap);
+        CreateInteractor<PlayerInteractor>(interactorsMap);
 
-        return iteractorsMap;
+        return interactorsMap;
     }
 
     public override Dictionary<Type, Repository> CreateAllRepositories()

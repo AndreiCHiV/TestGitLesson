@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class SceneMangerBase
+public abstract class SceneManagerBase
 {
     public event Action<Scene> OnSceneLoadedEvent;
 
@@ -15,7 +15,7 @@ public abstract class SceneMangerBase
 
     protected Dictionary<string, SceneConfig> _sceneConfigMap;
 
-    public SceneMangerBase()
+    public SceneManagerBase()
     {
         _sceneConfigMap = new Dictionary<string, SceneConfig>();
     }
