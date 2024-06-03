@@ -6,6 +6,8 @@ public abstract class SceneConfig
     public abstract Dictionary<Type, Repository> CreateAllRepositories();
     public abstract Dictionary<Type, Interactor> CreateAllIteractors();
 
+    public abstract string SceneName { get; }
+
     public void CreateInteractor<T>(Dictionary<Type, Interactor> interactorMap) where T : Interactor, new()
     {
         var interactor = new T();

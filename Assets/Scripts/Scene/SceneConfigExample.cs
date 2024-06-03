@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 public class SceneConfigExample : SceneConfig
 {
+    public const string SCENE_NAME = "L18";
+
+    public override string SceneName => SCENE_NAME;
+
     public override Dictionary<Type, Interactor> CreateAllIteractors()
     {
         Dictionary<Type, Interactor> iteractorsMap = new Dictionary<Type, Interactor>();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public class Scene
 {
@@ -16,6 +17,11 @@ public class Scene
 
     }
 
+    public Coroutine InitializeAsync()
+    {
+        return Coroutines.StartRoutine(InitializeRoutine());
+    }
+
     public T GetRepository<T>() where T : Repository
     {
         return _repositoriesBase.GetRepository<T>();
@@ -26,7 +32,7 @@ public class Scene
         return _interactorsBase.GetInteractor<T>();
     }
 
-    public IEnumerator InitializeRoutine()
+    private IEnumerator InitializeRoutine()
     {
         _interactorsBase.CreateAllInteractor();
         _repositoriesBase.CreateAllRepository();
