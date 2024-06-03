@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class ArcTester : MonoBehaviour
 {
-    public static Scene scene;
+    public static SceneMangerBase sceneManager;
 
     private void Start()
     {
-        SceneConfigExample sceneConfig = new SceneConfigExample();
-        scene = new Scene(sceneConfig);
+        sceneManager = new SceneManagerExample();
+        sceneManager.InitScenesMap();
+        sceneManager.LoadCurrentSceneAsync();
 
-        StartCoroutine(scene.InitializeRoutine());
     }
 
 

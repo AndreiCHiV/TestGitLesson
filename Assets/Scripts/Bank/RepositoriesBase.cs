@@ -16,13 +16,13 @@ public class RepositoriesBase
         _repositoriesMap = _sceneConfig.CreateAllRepositories();
     }
 
-    //private void CreateRepository<T>() where T : Repository, new()
-    //{
-    //    var repository = new T();
-    //    var type = typeof(T);
+    private void CreateRepository<T>() where T : Repository, new()
+    {
+        var repository = new T();
+        var type = typeof(T);
 
-    //    _repositoriesMap[type] = repository;
-    //}
+        _repositoriesMap[type] = repository;
+    }
 
     public void SendOnCreateToAllRepository()
     {

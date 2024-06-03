@@ -1,11 +1,82 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneMangerBase
+public abstract class SceneMangerBase
 {
+    public event Action<Scene> OnSceneLoadedEvent;
+
     public Scene Scene { get; private set; }
 
-    private IEnumerator LoadSceneAsync(SceneConfig sceneConfig)
+
+    public bool isLoading { get; private set; }
+
+    protected Dictionary<string, SceneConfig> _sceneConfigMap;
+
+    public SceneMangerBase()
+    {
+        _sceneConfigMap = new Dictionary<string, SceneConfig>();
+    }
+
+    public abstract void InitScenesMap();
+
+    public T GetRepository<T>() where T : Repository
+    {
+        return Scene.GetRepository<T>();
+    }
+
+    public T GetInteractor<T>() where T : Interactor
+    {
+        return Scene.GetIteractor<T>();
+    }
+
+    public Coroutine LoadCurrentSceneAsync()
+    {
+        if (isLoading)
+        {
+            throw new Exception("Scene is loading now!");
+        }
+
+        var sceneName = SceneManager.GetActiveScene().name;
+        var config = _sceneConfigMap[sceneName];
+        return Coroutines.StartRoutine(LoadCurrentSceneRoutine(config));
+    }
+
+    private IEnumerator LoadCurrentSceneRoutine(SceneConfig sceneConfig)
+    {
+        isLoading = true;
+
+        yield return Coroutines.StartRoutine(InitializeSceneRoutine(sceneConfig));
+
+        isLoading = false;
+        OnSceneLoadedEvent?.Invoke(Scene);
+    }
+
+    public Coroutine LoadNewSceneAsync(string sceneName)
+    {
+        if (isLoading)
+        {
+            throw new Exception("Scene is loading now!");
+        }
+
+        var config = _sceneConfigMap[sceneName];
+        return Coroutines.StartRoutine(LoadNewSceneRoutine(config));
+    }
+
+    private IEnumerator LoadNewSceneRoutine(SceneConfig sceneConfig)
+    {
+        isLoading = true;
+
+        yield return Coroutines.StartRoutine(LoadSceneRoutine(sceneConfig));
+        yield return Coroutines.StartRoutine(InitializeSceneRoutine(sceneConfig));
+
+        isLoading = false;
+        OnSceneLoadedEvent?.Invoke(Scene);
+    }
+
+    private IEnumerator LoadSceneRoutine(SceneConfig sceneConfig)
     {
         var async = SceneManager.LoadSceneAsync(sceneConfig.SceneName);
         async.allowSceneActivation = false;
@@ -18,7 +89,7 @@ public class SceneMangerBase
         async.allowSceneActivation = true;
     }
 
-    private IEnumerator InitializeSceneAsync(SceneConfig sceneConfig)
+    private IEnumerator InitializeSceneRoutine(SceneConfig sceneConfig)
     {
         Scene = new Scene(sceneConfig);
         yield return Scene.InitializeAsync();
